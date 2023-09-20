@@ -8,4 +8,8 @@ The eventual goal is to build the application out to incorporate a number of imp
 - CLI interface with argument parameters
 - more data sources
 
+<<<<<<< HEAD
 and more. I am starting small and building one step at a time.
+=======
+and more. I am starting small and building one step at a time.
+>>>>>>> 23930079db161e78f048524423e8ef651c4df47f
