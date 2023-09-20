@@ -119,6 +119,10 @@ celerybeat.pid
 # SageMath parsed files
 *.sage.py
 
+# Dump file
+# I use this to keep up with code that isn't currently in a working file but doesn't need to be deleted (yet)
+dump.py
+
 # Environments
 .env
 .venv
