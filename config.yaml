@@ -1,2 +1,6 @@
-kaggle:
-  credentials_file: "/Users/guycutting/.kaggle/kaggle.json"
+download_limit_mb: 10
+
+sources:
+  kaggle:
+    max_session_downloads: 3
+    credentials_file: "/Users/guycutting/.kaggle/kaggle.json"

@@ -123,6 +123,13 @@ celerybeat.pid
 # I use this to keep up with code that isn't currently in a working file but doesn't need to be deleted (yet)
 dump.py
 
+# Downloaded datasets
+# do not want these in the app repo - can upload to another repo
+datasets/*
+
+# sqlite .db file - this will be created when the program first runs
+datasets.db
+
 # Environments
 .env
 .venv
@@ -131,7 +138,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-my_venv
+my_venv/
 
 # Spyder project settings
 .spyderproject
