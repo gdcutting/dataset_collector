@@ -127,6 +127,9 @@ dump.py
 # do not want these in the app repo - can upload to another repo
 datasets/*
 
+# sqlite .db file - this will be created when the program first runs
+datasets.db
+
 # Environments
 .env
 .venv

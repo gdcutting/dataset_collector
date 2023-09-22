@@ -5,6 +5,7 @@ import kaggle
 import json
 import yaml
 import re
+import sqlite3
 from bs4 import BeautifulSoup
 from json.decoder import JSONDecodeError
 
@@ -15,6 +16,8 @@ max_kaggle_downloads = 3
 
 # instantiate tracking
 download_refs = {}
+con = None
+cur = None
 
 def read_config():
 	"""
@@ -30,6 +33,21 @@ def read_config():
 
 	# set max kaggle downloads
 	max_kaggle_downloads = config['sources']['kaggle']['max_session_downloads']
+
+def init_storage():
+	# establish sqlite connection and create cursor
+	# this will create the db if it does not already exist
+	con = sqlite3.connect("datasets.db")
+	cur = con.cursor()
+
+	# create the downloads table
+	try:
+		cur.execute("CREATE TABLE downloads(source, reference, size, files)")
+	except sqlite3.OperationalError:
+		print('Downloads table exists. Skipping creation.')
+
+	# close the connection
+	con.close()
 
 def read_dataset_status():
 	"""
@@ -47,33 +65,31 @@ def read_dataset_status():
 	print(datasets_list)
 
 def log_download(source, ref, size, files):
-	# construct dict for dataset item
-	dataset_dict = {
-		"source": "kaggle",
-		"ref" : ref,
-		"size" : size,
-		"files" : files
-	}
+	# create connection and cursor
+	# we know datasets.db exists now since init_storage has run
+	con = sqlite3.connect("datasets.db")
+	cur = con.cursor()
 
-	print(dataset_dict)
+	params = (source, ref, size, files)
+	print("log_download() files: " + files)
 
-	json_file_path = 'datasets.json'
+	# check for existing download
+	select_str = "SELECT * FROM downloads WHERE source = 'kaggle' AND reference = '" + ref + "'"
+	print(select_str)
+	cur.execute(select_str)
 
-	# Check if the JSON file exists
+	# if the above statement returns a record, then the download already exists
+	# if not, we will get a type error with this assignment and we know to insert the download record
 	try:
-		with open(json_file_path, 'r') as json_file:
-			json_data = json.load(json_file)
-	except FileNotFoundError:
-		# If the file doesn't exist, initialize it as an empty list
-		json_data = []
+		record_exists = cur.fetchone()[0]
+	except TypeError:
+		print("No existing record.")
+		cur.execute("INSERT INTO downloads VALUES(?, ?, ?, ?)", params)
+		con.commit()
 
-		# Append the new data to the existing list
-		json_data = json_data.append(dataset_dict)
-		print(json_data)
-
-		# Write the updated data back to the JSON file
-		with open(json_file_path, 'w') as json_file:
-			json.dump(json_data, json_file, indent=4)
+	# close the connection
+	con.close()
+	
 
 # default Kaggle download - fetch small number of 'hot' datasets
 def kaggle_download():
@@ -102,7 +118,7 @@ def kaggle_download():
 			dataset_size = dataset.size
 			print("Downloading from " + dataset.ref + " (" + dataset.size + ")")
 			print("Dataset files: " + str(dataset_files))
-			log_download("kaggle",dataset.ref,dataset.size,str(dataset.files))
+			log_download("kaggle",dataset.ref,dataset.size,str(dataset_files))
 			#kaggle.api.dataset_download_files(dataset.ref, path=download_path, unzip=True, quiet=False)
 		else:
 			print(dataset.ref + " failed size check. Skipping.")
@@ -141,6 +157,7 @@ def track_dataset():
 def main():
 	# read_status()
 	read_config()
+	init_storage()
 	kaggle_download()
 
 if __name__ == "__main__":
