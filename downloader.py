@@ -64,14 +64,13 @@ def read_dataset_status():
 	datasets_list = [datasets[dict_value] for dict_value in datasets]
 	print(datasets_list)
 
-def log_download(source, ref, size, files):
+def download_exists(source, ref, size, files):
 	# create connection and cursor
 	# we know datasets.db exists now since init_storage has run
 	con = sqlite3.connect("datasets.db")
 	cur = con.cursor()
 
 	params = (source, ref, size, files)
-	print("log_download() files: " + files)
 
 	# check for existing download
 	select_str = "SELECT * FROM downloads WHERE source = 'kaggle' AND reference = '" + ref + "'"
@@ -82,15 +81,34 @@ def log_download(source, ref, size, files):
 	# if not, we will get a type error with this assignment and we know to insert the download record
 	try:
 		record_exists = cur.fetchone()[0]
+		return_value = True
 	except TypeError:
 		print("No existing record.")
-		cur.execute("INSERT INTO downloads VALUES(?, ?, ?, ?)", params)
-		con.commit()
-
+		return_value = False
+	
 	# close the connection
 	con.close()
-	
 
+	return return_value
+
+def log_download(source, ref, size, files):
+	# create connection and cursor
+	# we know datasets.db exists now since init_storage has run
+	con = sqlite3.connect("datasets.db")
+	cur = con.cursor()
+
+	params = (source, ref, size, files)
+	print("log_download() files: " + files)
+
+	try:
+		cur.execute("INSERT INTO downloads VALUES(?, ?, ?, ?)", params)
+		con.commit()
+		con.close()
+
+		return true
+	except:
+		return false
+	
 # default Kaggle download - fetch small number of 'hot' datasets
 def kaggle_download():
 	"""
@@ -118,8 +136,9 @@ def kaggle_download():
 			dataset_size = dataset.size
 			print("Downloading from " + dataset.ref + " (" + dataset.size + ")")
 			print("Dataset files: " + str(dataset_files))
-			log_download("kaggle",dataset.ref,dataset.size,str(dataset_files))
-			kaggle.api.dataset_download_files(dataset.ref, path=download_path, unzip=True, quiet=False)
+			if not download_exists("kaggle",dataset.ref,dataset.size,str(dataset_files)):
+				kaggle.api.dataset_download_files(dataset.ref, path=download_path, unzip=True, quiet=False)
+				log_download(dataset.ref, path=download_path, unzip=True, quiet=False)
 		else:
 			print(dataset.ref + " failed size check. Skipping.")
 		
