@@ -79,7 +79,7 @@ def log_download(source, ref, size, files):
 	cur.execute(select_str)
 
 	# if the above statement returns a record, then the download already exists
-	# if not, we will get a type error with this assignment and we know to insert the download record1
+	# if not, we will get a type error with this assignment and we know to insert the download record
 	try:
 		record_exists = cur.fetchone()[0]
 	except TypeError:
