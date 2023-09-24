@@ -119,7 +119,7 @@ def kaggle_download():
 			print("Downloading from " + dataset.ref + " (" + dataset.size + ")")
 			print("Dataset files: " + str(dataset_files))
 			log_download("kaggle",dataset.ref,dataset.size,str(dataset_files))
-			#kaggle.api.dataset_download_files(dataset.ref, path=download_path, unzip=True, quiet=False)
+			kaggle.api.dataset_download_files(dataset.ref, path=download_path, unzip=True, quiet=False)
 		else:
 			print(dataset.ref + " failed size check. Skipping.")
 		
