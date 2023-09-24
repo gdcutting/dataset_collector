@@ -1,3 +1,10 @@
+"""
+File: downloader.py
+Author: Guy Cutting
+Date: 9/23/2023
+Description: performs dataset downloads using public APIs
+"""
+
 import requests
 import pandas as pd
 import os
