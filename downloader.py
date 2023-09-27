@@ -56,22 +56,6 @@ def init_storage():
 	# close the connection
 	con.close()
 
-def read_dataset_status():
-	"""
-	read_dataset_status() checks datasets.json to get lists of downloaded datasets
-	need to deprecate/remove now that we are using sqlite
-	"""
-	# open JSON file
-	file = open('datasets.json')
-	
-	# read JSON file into dict
-	datasets = json.load(file)  
-
-	# Getting the list of values of the dictionary with the list comprehension
-	# demoDictionary[dict_key] represents dictionary value
-	datasets_list = [datasets[dict_value] for dict_value in datasets]
-	print(datasets_list)
-
 def download_exists(source, ref, size, files):
 	# create connection and cursor
 	# we know datasets.db exists now since init_storage has run
