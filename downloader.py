@@ -59,6 +59,7 @@ def init_storage():
 def read_dataset_status():
 	"""
 	read_dataset_status() checks datasets.json to get lists of downloaded datasets
+	need to deprecate/remove now that we are using sqlite
 	"""
 	# open JSON file
 	file = open('datasets.json')
