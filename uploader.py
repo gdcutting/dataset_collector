@@ -24,7 +24,13 @@ def check_upload_status():
 	select_str = "SELECT * FROM downloads"
 	cur.execute(select_str)
 
-	for row in cur.fetchall():
+	# Fetch the rows
+	rows = cur.fetchall()
+	# Check the number of rows returned
+	row_count = len(rows)
+
+	print("There are currently " + str(row_count) + " downloads:")
+	for row in rows:
     # Each row is a tuple, and you can access columns by index
 		column1_value = row[0]
 		column2_value = row[1]
