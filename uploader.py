@@ -6,6 +6,10 @@ Description: uploads files already downloaded with downloader, to a GitHub repo 
 """
 import sqlite3
 
+class DatasetUploader:
+	def __init__(self, name, age):
+		self.active = True
+
 def check_upload_status():
     # establish sqlite connection and create cursor
 	# this will create the db if it does not already exist
