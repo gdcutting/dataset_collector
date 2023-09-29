@@ -4,8 +4,9 @@ Author: Guy Cutting
 Date: 9/23/2023
 Description: uploads files already downloaded with downloader, to a GitHub repo or elsewhere
 """
+import sqlite3
 
-check_upload_status():
+def check_upload_status():
     # establish sqlite connection and create cursor
 	# this will create the db if it does not already exist
 	con = sqlite3.connect("datasets.db")
@@ -20,14 +21,14 @@ check_upload_status():
 
 	# build the string for SELECT query for all existing downloads
 	# execute the query
-	select_str = "SELECT * FROM downloads
+	select_str = "SELECT * FROM downloads"
 	cur.execute(select_str)
 
-	for row in cursor.fetchall():
+	for row in cur.fetchall():
     # Each row is a tuple, and you can access columns by index
 		column1_value = row[0]
-    	column2_value = row[1]
-    	# ... and so on for other columns
+		column2_value = row[1]
+		# ... and so on for other columns
 
     	# You can also access columns by name if you use a named tuple
     	# (assuming your query returned named columns)
@@ -35,7 +36,7 @@ check_upload_status():
     	# column2_value = row['column2']
 
    		# Perform operations with the data as needed
-    	print(column1_value, column2_value)
+		print(column1_value, column2_value)
 
 	# close the connection
 	con.close()
