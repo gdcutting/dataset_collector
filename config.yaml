@@ -1,4 +1,5 @@
 download_limit_mb: 10
+master_sources = ["kaggle"]
 
 sources:
   kaggle:
