@@ -1,4 +1,7 @@
 download_limit_mb: 10
+sources = ["kaggle, datahub, quandl, worldbank"]
+targets = ["github"]
+
 
 sources:
   kaggle:
