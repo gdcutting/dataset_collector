@@ -5,6 +5,9 @@ Date: 9/23/2023
 Description: uploads files already downloaded with downloader, to a GitHub repo or elsewhere
 """
 import sqlite3
+import base64
+from github import Github
+from pprint import pprint
 
 class DatasetUploader:
 	def __init__(self, name, age):
