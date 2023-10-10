@@ -1,9 +1,16 @@
 download_limit_mb: 10
-sources = ["kaggle, datahub, quandl, worldbank"]
-targets = ["github"]
+targets: ["github"]
 
-
-sources:
-  kaggle:
-    max_session_downloads: 3
-    credentials_file: "/Users/guycutting/.kaggle/kaggle.json"
+sources: 
+  kaggle: 
+      max_session_downloads: 10
+      credentials_file: "/Users/guycutting/.kaggle/kaggle.json"
+  datahub: 
+      - max_session_downloads: 3
+      - credentials_file: "/Users/guycutting/.kaggle/kaggle.json"
+  quandl: 
+      - max_session_downloads: 3
+      - credentials_file: "/Users/guycutting/.kaggle/kaggle.json"
+  worldbank: 
+      - max_session_downloads: 3
+      - credentials_file: "/Users/guycutting/.kaggle/kaggle.json"
