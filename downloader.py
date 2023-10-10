@@ -90,8 +90,7 @@ def log_download(source, ref, size, files):
 	con = sqlite3.connect("datasets.db")
 	cur = con.cursor()
 
-	params = (source, ref, str(size), files)
-	print(size)
+	params = (source, ref, size, str(files))
 	print("log_download() files: " + str(files))
 
 	try:
