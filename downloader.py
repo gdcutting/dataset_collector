@@ -9,6 +9,7 @@ import requests
 import pandas as pd
 import os
 import kaggle
+import openml
 import json
 import yaml
 import re
@@ -137,6 +138,12 @@ def kaggle_download():
 		
 		# print("---------")
 
+def openml_download():
+	# List all datasets and their properties
+	open_ml_df = openml.datasets.list_datasets(output_format="dataframe")
+
+	open_ml_df.head(5)
+
 def separate_num_char(s):
 	"""
 	separate_num_chars(s) accepts a string containing letters and numbers and splits it into numeric and character components
@@ -171,6 +178,7 @@ def main():
 	read_config()
 	init_storage()
 	kaggle_download()
+	openml_download()
 
 if __name__ == "__main__":
 	main()
