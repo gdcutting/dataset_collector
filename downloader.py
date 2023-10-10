@@ -9,6 +9,7 @@ import requests
 import pandas as pd
 import os
 import kaggle
+import openml
 import json
 import yaml
 import re
@@ -39,6 +40,7 @@ def read_config():
 	download_limit_mb = config['download_limit_mb']
 
 	# set max kaggle downloads
+	print(config['sources'])
 	max_kaggle_downloads = config['sources']['kaggle']['max_session_downloads']
 
 def init_storage():
@@ -89,17 +91,17 @@ def log_download(source, ref, size, files):
 	con = sqlite3.connect("datasets.db")
 	cur = con.cursor()
 
-	params = (source, ref, size, files)
-	print("log_download() files: " + files)
+	params = (source, ref, size, str(files))
+	print("log_download() files: " + str(files))
 
 	try:
 		cur.execute("INSERT INTO downloads VALUES(?, ?, ?, ?)", params)
 		con.commit()
 		con.close()
 
-		return true
+		return True
 	except:
-		return false
+		return False
 	
 # default Kaggle download - fetch small number of 'hot' datasets
 def kaggle_download():
@@ -130,11 +132,17 @@ def kaggle_download():
 			print("Dataset files: " + str(dataset_files))
 			if not download_exists("kaggle",dataset.ref,dataset.size,str(dataset_files)):
 				kaggle.api.dataset_download_files(dataset.ref, path=download_path, unzip=True, quiet=False)
-				log_download(dataset.ref, path=download_path, unzip=True, quiet=False)
+				log_download("kaggle", dataset.ref, dataset.size, dataset_files)
 		else:
 			print(dataset.ref + " failed size check. Skipping.")
 		
 		# print("---------")
+
+def openml_download():
+	# List all datasets and their properties
+	open_ml_df = openml.datasets.list_datasets(output_format="dataframe")
+
+	open_ml_df.head(5)
 
 def separate_num_char(s):
 	"""
@@ -170,6 +178,7 @@ def main():
 	read_config()
 	init_storage()
 	kaggle_download()
+	openml_download()
 
 if __name__ == "__main__":
 	main()
