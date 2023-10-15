@@ -142,6 +142,7 @@ def openml_download():
 	# List all datasets and their properties
 	open_ml_df = openml.datasets.list_datasets(output_format="dataframe")
 
+	# display a few records
 	open_ml_df.head(5)
 
 	return True
