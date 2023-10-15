@@ -11,6 +11,9 @@ class DatasetUploader:
 		self.active = True
 
 def check_upload_status():
+	"""
+	check_upload_status() checks the SQLite db to see if files have already been downloaded for a given dataset
+	"""
     # establish sqlite connection and create cursor
 	# this will create the db if it does not already exist
 	con = sqlite3.connect("datasets.db")
