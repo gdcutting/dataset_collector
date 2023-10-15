@@ -150,6 +150,7 @@ def openml_download():
 def separate_num_char(s):
 	"""
 	separate_num_chars(s) accepts a string containing letters and numbers and splits it into numeric and character components
+	size entries for downloads are typically of the form '257KB' and we need to isolate the numbers from the units
 	"""
 	res = re.split('([-+]?\d+\.\d+)|([-+]?\d+)', s.strip())
 	res_f = [r.strip() for r in res if r is not None and r.strip() != '']
