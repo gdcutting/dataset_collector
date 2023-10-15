@@ -144,6 +144,8 @@ def openml_download():
 
 	open_ml_df.head(5)
 
+	return True
+
 def separate_num_char(s):
 	"""
 	separate_num_chars(s) accepts a string containing letters and numbers and splits it into numeric and character components
