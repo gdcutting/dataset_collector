@@ -27,8 +27,8 @@ def check_upload_status():
 		print('Downloads table exists. Checking uploads.')
 
 	# build the string for SELECT query for all existing downloads
-	# execute the query
 	select_str = "SELECT * FROM downloads"
+	# execute the query
 	cur.execute(select_str)
 
 	# Fetch the rows
