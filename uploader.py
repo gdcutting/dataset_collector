@@ -44,11 +44,12 @@ def check_upload_status():
 
     	# You can also access columns by name if you use a named tuple
     	# (assuming your query returned named columns)
-    	# column1_value = row['column1']
+		# column1_value_test = row['column1']
     	# column2_value = row['column2']
 
    		# Perform operations with the data as needed
 		print(column1_value, column2_value)
+		print(column1_value_test)
 
 	# close the connection
 	con.close()
