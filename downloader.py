@@ -143,7 +143,7 @@ def openml_download():
 	open_ml_df = openml.datasets.list_datasets(output_format="dataframe")
 
 	# display a few records
-	open_ml_df.head(5)
+	open_ml_df.head(10)
 
 	return True
 
