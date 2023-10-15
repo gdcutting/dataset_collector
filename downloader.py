@@ -159,6 +159,7 @@ def separate_num_char(s):
 def filesize_check(filesize):
 	"""
 	filesize_check() compares filesize to the download_limit_mb which can be set in config.yaml
+	depends on separate_num_chars() to get number and units
 	"""
 	size, unit = separate_num_char(filesize)
 	size = int(size)
