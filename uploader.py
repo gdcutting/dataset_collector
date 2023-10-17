@@ -11,6 +11,9 @@ class DatasetUploader:
 		self.active = True
 
 def check_upload_status():
+	"""
+	check_upload_status() checks the SQLite db to see if files have already been downloaded for a given dataset
+	"""
     # establish sqlite connection and create cursor
 	# this will create the db if it does not already exist
 	con = sqlite3.connect("datasets.db")
@@ -24,8 +27,8 @@ def check_upload_status():
 		print('Downloads table exists. Checking uploads.')
 
 	# build the string for SELECT query for all existing downloads
-	# execute the query
 	select_str = "SELECT * FROM downloads"
+	# execute the query
 	cur.execute(select_str)
 
 	# Fetch the rows
@@ -35,18 +38,18 @@ def check_upload_status():
 
 	print("There are currently " + str(row_count) + " downloads:")
 	for row in rows:
-    # Each row is a tuple, and you can access columns by index
+    	# Each row is a tuple, and you can access columns by index
 		column1_value = row[0]
 		column2_value = row[1]
-		# ... and so on for other columns
 
     	# You can also access columns by name if you use a named tuple
     	# (assuming your query returned named columns)
-    	# column1_value = row['column1']
+		# column1_value_test = row['column1']
     	# column2_value = row['column2']
 
    		# Perform operations with the data as needed
 		print(column1_value, column2_value)
+		print(column1_value_test)
 
 	# close the connection
 	con.close()

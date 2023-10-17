@@ -1,6 +1,8 @@
 download_limit_mb: 10
 targets: ["github"]
 
+# need to decide on initial list of sources
+# find the ones (like kaggle) that both have a lot of datasets and have a relatively easy-to-implement api
 sources: 
   kaggle: 
       max_session_downloads: 10
